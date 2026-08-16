@@ -1,0 +1,78 @@
+{
+  "name": "elysium-launcher",
+  "productName": "Elysium Launcher",
+  "version": "1.0.0",
+  "description": "Launcher estilo loja de jogos, com download via torrent/HTTP integrado, usando um catalogo externo configurado por quem usa o app.",
+  "main": "src/main/main.js",
+  "author": "Elysium Launcher",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node test/run.js",
+    "test:torrent": "node test/teste-torrent-isolado.js",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:linux": "electron-builder --linux AppImage",
+    "dist:mac": "electron-builder --mac dmg",
+    "postinstall": "node -e \"console.log('Dependencias instaladas. Rode: npm start')\""
+  },
+  "devDependencies": {
+    "electron": "^42.0.0",
+    "electron-builder": "^26.15.3",
+    "@electron/fuses": "^2.1.3"
+  },
+  "dependencies": {
+    "webtorrent": "^3.0.7",
+    "magnet-uri": "^7.0.10"
+  },
+  "build": {
+    "appId": "com.elysiumlauncher.app",
+    "productName": "Elysium Launcher",
+    "asar": true,
+    "files": [
+      "src/**/*",
+      "LEGAL.md",
+      "package.json",
+      "!**/*.map"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "afterPack": "build/afterPack.js",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.games"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "build/icon.png",
+      "category": "Game"
+    }
+  }
+}
