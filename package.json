@@ -19,7 +19,7 @@
     "postinstall": "node -e \"console.log('Dependencias instaladas. Rode: npm start')\""
   },
   "devDependencies": {
-    "electron": "^42.0.0",
+    "electron": "^42.11.16",
     "electron-builder": "^26.15.3",
     "@electron/fuses": "^2.1.3"
   },
